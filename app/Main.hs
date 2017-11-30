@@ -5,7 +5,9 @@ import Text.CSV
 import Text.Parsec.Error
 import Data.Maybe
 import Data.List
+import Control.Applicative
 import Data.Ord
+import Data.Time (getCurrentTime)
 
 noEmptyRows :: Either ParseError CSV -> CSV
 noEmptyRows = either (const []) (filter (\row -> 2 <= length row))
@@ -50,7 +52,6 @@ median xs | len `mod` 2 == 1 = Just $ mid
 modCalc [] = Nothing
 modCalc xs = Just $ head $ maximumBy (comparing length) $ group $ sort xs
 
-
 main :: IO ()
 main = do
    a <- awayRuns
@@ -59,5 +60,7 @@ main = do
    print $ stdev a
    print $ median a
    print $ modCalc a
+   time <- getCurrentTime
+   print $ show time 
 
 
